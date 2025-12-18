@@ -1,0 +1,5 @@
+selenium
+playwright
+python-dotenv
+webdriver-manager
+asyncio
