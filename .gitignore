@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Environment Variables
+.env
+
+# Playwright / Browsers
+.playwright-artifacts/
+test-results/
+
+# Project Logs & Sessions (Security)
+logs/*.log
+logs/*.png
+logs/*.json
+logs/session_cookies.json
+
+# Scraped Data
+data/*.csv
+data/*.json
+
+# IDEs
+.vscode/
+.idea/
+
+# Legacy archives (Optional - remove if you want to track legacy files)
+# legacy/
