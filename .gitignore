@@ -1,0 +1,13 @@
+# Environment Variables
+.env
+
+
+# Project Logs & Sessions (Security)
+logs/*.log
+logs/*.png
+logs/*.json
+logs/session_cookies.json
+
+# Scraped Data
+data/*.csv
+data/*.json
