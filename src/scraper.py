@@ -16,18 +16,32 @@ def scrape_list(page: Page, list_type: str, target_account: str, max_count: int)
     logger.info(f"📋 Iniciando extracción de {list_type} para @{target_account} (Meta: {max_count})")
     
     try:
-        # 1. Ir al perfil
-        page.goto(f"https://www.instagram.com/{target_account}/")
-        time.sleep(3)
+        # 1. Ir al perfil con reintentos para evitar crashes
+        for attempt in range(3):
+            try:
+                page.goto(f"https://www.instagram.com/{target_account}/", timeout=60000)
+                break
+            except Exception as e:
+                logger.warning(f"⚠️ Error cargando perfil (intento {attempt+1}/3): {e}")
+                time.sleep(5)
+                if attempt == 2:
+                    logger.error("❌ Falló la carga del perfil tras 3 intentos.")
+                    return []
+
+        time.sleep(5) # Esperar carga visual completa
         
         # 2. Abrir modal
         # Usamos href parcial para encontrar el enlace correcto
         link_selector = f"a[href*='/{list_type}']"
         try:
-            page.wait_for_selector(link_selector, timeout=5000)
+            page.wait_for_selector(link_selector, timeout=10000)
             page.locator(link_selector).click()
         except Exception:
-            logger.error(f"❌ No se encontró el enlace de {list_type}. ¿La cuenta es privada o está mal el nombre?")
+            logger.error(f"❌ No se encontró el enlace de {list_type}. Guardando debug info...")
+            timestamp = int(time.time())
+            page.screenshot(path=f"logs/debug_error_{target_account}_{list_type}_{timestamp}.png")
+            with open(f"logs/debug_source_{target_account}_{list_type}_{timestamp}.html", "w", encoding="utf-8") as f:
+                f.write(page.content())
             return []
             
         # 3. Esperar al modal

@@ -1,4 +1,4 @@
-# Python
+# --- PYTHON ---
 __pycache__/
 *.pyc
 *.pyo
@@ -9,27 +9,36 @@ venv/
 .venv/
 pip-log.txt
 pip-delete-this-directory.txt
+.pytest_cache/
 
-# Environment Variables
+# --- VARIABLES DE ENTORNO (CRÍTICO) ---
 .env
+.env.*
+!.env.example
 
-# Playwright / Browsers
+# --- SEGURIDAD Y CREDENCIALES (NUEVO - BLINDAJE) ---
+# Esto bloquea cualquier archivo que contenga estas palabras
+# sin importar en qué carpeta estén.
+*cookie*.json
+*session*.json
+*auth*.json
+*token*.json
+*credential*.json
+
+# --- PLAYWRIGHT / BROWSERS ---
 .playwright-artifacts/
 test-results/
 
-# Project Logs & Sessions (Security)
-logs/*.log
-logs/*.png
-logs/*.json
-logs/session_cookies.json
-
-# Scraped Data
-data/*.csv
-data/*.json
-
-# IDEs
+# --- LOGS Y DATOS ---
+# Es más seguro ignorar la carpeta entera que archivo por archivo
+logs/
+data/
+./gemini/
+# --- IDEs Y SISTEMA OPERATIVO ---
 .vscode/
 .idea/
+.DS_Store
+Thumbs.db
 
-# Legacy archives (Optional - remove if you want to track legacy files)
+# --- LEGACY ---
 # legacy/
